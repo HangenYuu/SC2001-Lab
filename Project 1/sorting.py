@@ -27,15 +27,17 @@ def merge(
             j += 1
         k += 1
 
-    while i < len(left_half):
-        arr[k] = left_half[i]
-        i += 1
-        k += 1
+    if i < len(left_half):
+        h = len(left_half) - i
+        arr[k : k + h] = left_half[i : i + h]
+        i += h
+        k += h
 
-    while j < len(right_half):
-        arr[k] = right_half[j]
-        j += 1
-        k += 1
+    if j < len(right_half):
+        h = len(right_half) - j
+        arr[k : k + h] = right_half[j : j + h]
+        j += h
+        k += h
 
     return arr
 
@@ -45,44 +47,26 @@ def merge_sort(arr: list, comparison_counter: ComparisonCounter) -> list:
 
     if len(arr) > 2:
 
-        left_half = merge_sort(arr[:mid])
-        right_half = merge_sort(arr[mid:])
+        arr[:mid] = merge_sort(arr[:mid], comparison_counter)
+        arr[mid:] = merge_sort(arr[mid:], comparison_counter)
 
-    arr = merge(arr, left_half, right_half, comparison_counter)
+    arr = merge(arr, arr[:mid], arr[mid:], comparison_counter)
     return arr
 
 
-def hybrid_sort(arr, S):
+def hybrid_sort(arr: list, comparison_counter: ComparisonCounter, S: int):
+    if len(arr) < 2:
+        return arr
+
     if len(arr) <= S:
-        insertion_sort(arr)
-    else:
-        mid = len(arr) // 2
-        left_half = arr[:mid]
-        right_half = arr[mid:]
+        arr = insertion_sort(arr, comparison_counter)
+        return arr
 
-        hybrid_sort(left_half, S)
-        hybrid_sort(right_half, S)
+    mid = len(arr) // 2
 
-        i = j = k = 0
+    arr[:mid] = hybrid_sort(arr[:mid], comparison_counter, S)
+    arr[mid:] = hybrid_sort(arr[mid:], comparison_counter, S)
 
-        while i < len(left_half) and j < len(right_half):
-            if left_half[i] < right_half[j]:
-                arr[k] = left_half[i]
-                i += 1
-            else:
-                arr[k] = right_half[j]
-                j += 1
-            k += 1
+    arr = merge(arr, arr[:mid], arr[mid:], comparison_counter)
 
-        while i < len(left_half):
-            arr[k] = left_half[i]
-            i += 1
-            k += 1
-
-        while j < len(right_half):
-            arr[k] = right_half[j]
-            j += 1
-            k += 1
-
-
-# Hemingway bridge: Only hybrid sort and testing is left.
+    return arr
