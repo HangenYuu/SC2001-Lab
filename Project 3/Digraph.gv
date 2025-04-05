@@ -1,0 +1,45 @@
+// Knapsack Subproblem Graph
+digraph {
+	graph [rankdir=LR]
+	node [color=lightblue shape=box style=filled]
+	"(3,14)" [label="Items: 3
+Capacity: 14"]
+	"(2,6)" [label="Items: 2
+Capacity: 6"]
+	"(3,14)" -> "(2,6)" [label="Include item 2 (+9)"]
+	"(1,0)" [label="Items: 1
+Capacity: 0"]
+	"(2,6)" -> "(1,0)" [label="Include item 1 (+6)"]
+	"(1,6)" [label="Items: 1
+Capacity: 6"]
+	"(2,6)" -> "(1,6)" [label="Skip item 1"]
+	"(0,2)" [label="Items: 0
+Capacity: 2"]
+	"(1,6)" -> "(0,2)" [label="Include item 0 (+7)"]
+	"(0,6)" [label="Items: 0
+Capacity: 6"]
+	"(1,6)" -> "(0,6)" [label="Skip item 0"]
+	"(2,14)" [label="Items: 2
+Capacity: 14"]
+	"(3,14)" -> "(2,14)" [label="Skip item 2"]
+	"(1,8)" [label="Items: 1
+Capacity: 8"]
+	"(2,14)" -> "(1,8)" [label="Include item 1 (+6)"]
+	"(0,4)" [label="Items: 0
+Capacity: 4"]
+	"(1,8)" -> "(0,4)" [label="Include item 0 (+7)"]
+	"(0,8)" [label="Items: 0
+Capacity: 8"]
+	"(1,8)" -> "(0,8)" [label="Skip item 0"]
+	"(1,14)" [label="Items: 1
+Capacity: 14"]
+	"(2,14)" -> "(1,14)" [label="Skip item 1"]
+	"(0,10)" [label="Items: 0
+Capacity: 10"]
+	"(1,14)" -> "(0,10)" [label="Include item 0 (+7)"]
+	"(0,14)" [label="Items: 0
+Capacity: 14"]
+	"(1,14)" -> "(0,14)" [label="Skip item 0"]
+	graph [label="Knapsack Problem
+Items: 3, Capacity: 14, Max Value: 16"]
+}
